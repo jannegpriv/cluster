@@ -1,36 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: staticwebserver
+  name: yagolangsite
   namespace: yatest
   labels:
-    app: staticwebserver
+    app: yagolangsite
 spec:
-  replicas: 3 #scale out!!!!
+  replicas: 3
   selector:
     matchLabels:
-      app: staticwebserver
+      app: yagolangsite
   template:
     metadata:
       labels:
-        app: staticwebserver
+        app: yagolangsite
     spec:
       containers:
-        - name: staticwebserver
-          image: git.systementor.se/yacloud/goexemplet
+        - name: yagolangsite
+          image: stefanholmberg/ya123
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:
-            - name: ASPNETCORE_ENVIRONMENT
+            - name: RUNENVIRONMENT
               value: Production
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
   namespace: yatest
-  name: staticwebserver-service
+  name: yagolangsite-service
   labels:
-    app: staticwebserver
+    app: yagolangsite
 spec:
   type: LoadBalancer
   ports:
@@ -39,5 +41,5 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: staticwebserver
+    app: yagolangsite
   sessionAffinity: None
