@@ -17,3 +17,13 @@ spec:
                 name: yagolangsite-service
                 port:
                   number: 80
+    - host: "stefanssuperdupersajt.chickenkiller.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: staticwebserver-service
+                port:
+                  number: 80
