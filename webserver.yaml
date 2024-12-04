@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yagolangsite
+  name: staticwebserver
   namespace: mariatest
   labels:
-    app: yagolangsite
+    app: staticwebserver
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: yagolangsite
+      app: staticwebserver
   template:
     metadata:
       labels:
-        app: yagolangsite
+        app: staticwebserver
     spec:
       containers:
-        - name: yagolangsite
-          image: git.systementor.se/jan.gustafsson/jannegolangapi
+        - name: staticwebserver
+          image: joseluisq/static-web-server
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           env:
-            - name: RUNENVIRONMENT
+            - name: ASPNETCORE_ENVIRONMENT
               value: Production
-      imagePullSecrets:
-      - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
   namespace: mariatest
-  name: yagolangsite-service
+  name: staticwebserver-service
+  annotations:
+    service.beta.kubernetes.io/linode-loadbalancer-throttle: "4"
   labels:
-    app: yagolangsite
+    app: staticwebserver
 spec:
   type: LoadBalancer
   ports:
   - name: http
     port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 80
   selector:
-    app: yagolangsite
+    app: staticwebserver
   sessionAffinity: None
