@@ -34,7 +34,7 @@ metadata:
   labels:
     app: yagolangsite
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: http
     port: 80
