@@ -1,13 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: yatest
+  namespace: mariatest
   name: sites
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx 
   rules:
-    - host: "golangsite1204.crabdance.com"
+    - host: "jannegpriv123.crabdance.com"
       http:
         paths:
           - pathType: Prefix
@@ -17,7 +16,7 @@ spec:
                 name: yagolangsite-service
                 port:
                   number: 80
-    - host: "stefanssuperdupersajt.chickenkiller.com"
+    - host: "jannegpriv123.chickenkiller.com"
       http:
         paths:
           - pathType: Prefix
